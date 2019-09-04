@@ -30,16 +30,17 @@
 #define strcasecmp _stricmp
 #else
 #include <unistd.h>
-#endif
-
 #include <sys/wait.h>
+#endif
 
 #if defined(__has_include) && __has_include(<error.h>)
 #include <error.h>
 #else
 #include <stdarg.h>
 
-#ifndef __APPLE__
+#ifdef _WIN32
+#define getprogname() "unknown"
+#elif !defined(__APPLE__)
 // N.B.  getprogname() is an Apple/BSD-ism.
 // program_invocation_name is a GLIBC-ism, but it's also
 //  supported by libmusl.
